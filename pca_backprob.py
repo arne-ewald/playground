@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import numpy as np
+import time
 import matplotlib.pyplot as plt
 
 # Set random seeds for reproducibility
@@ -53,6 +54,9 @@ loss_history = []
 
 n_epochs = 1000
 
+# Record the start time
+start_time = time.time()
+
 for epoch in range(n_epochs):
     optimizer.zero_grad()
     
@@ -84,6 +88,10 @@ for epoch in range(n_epochs):
     if (epoch + 1) % 100 == 0:
         print(f"Epoch {epoch+1:4d}: Loss = {loss.item():.4e}, Fit Loss = {loss_fit.item():.4e}, Ortho Penalty = {ortho_penalty.item():.4e}")
 
+# Record the end time and compute the elapsed time.
+end_time = time.time()
+elapsed_time = end_time - start_time
+print(f"\nFitting took: {elapsed_time:.2f} seconds.")
 
 ####################################
 # 3b. plot the loss history
@@ -92,7 +100,7 @@ plt.figure(figsize=(8, 5))
 plt.plot(loss_history, label='Training Loss')
 plt.xlabel("Epoch")
 plt.ylabel("Loss")
-plt.title("Training Loss Over Epochs")
+plt.title("Loss Over Epochs")
 plt.legend()
 plt.grid(True)
 plt.show()
